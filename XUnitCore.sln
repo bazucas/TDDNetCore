@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{53355B02-040E-4DC2-A23F-012DC3F81698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CursoOnline.Dominio", "src\CursoOnline.Dominio\CursoOnline.Dominio.csproj", "{D3559757-D114-4E00-B8AE-A49794EA2E58}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A3B7BB6D-1526-4DD8-8F79-F6DAD3B979D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CursoOnline.DominioTest", "test\CursoOnline.DominioTest\CursoOnline.DominioTest.csproj", "{D299C9FB-E99E-4FBB-93A2-5B522F5B52F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoOnline.Dominio", "src\CursoOnline.Dominio\CursoOnline.Dominio.csproj", "{D3559757-D114-4E00-B8AE-A49794EA2E58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoOnline.Dados", "CursoOnline.Dados\CursoOnline.Dados.csproj", "{F3C19126-E96B-4CC1-9DF3-EB7C048E4A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoOnline.DominioTest", "test\CursoOnline.DominioTest\CursoOnline.DominioTest.csproj", "{D299C9FB-E99E-4FBB-93A2-5B522F5B52F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoOnline.Ioc", "CursoOnline.Ioc\CursoOnline.Ioc.csproj", "{8D958E98-0A5F-4454-9AF2-4205DED1369A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoOnline.Web", "CursoOnline.Web\CursoOnline.Web.csproj", "{BC830FCD-6A4B-46BF-8932-98E249365111}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,13 +27,21 @@ Global
 		{D299C9FB-E99E-4FBB-93A2-5B522F5B52F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D299C9FB-E99E-4FBB-93A2-5B522F5B52F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D299C9FB-E99E-4FBB-93A2-5B522F5B52F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3C19126-E96B-4CC1-9DF3-EB7C048E4A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C19126-E96B-4CC1-9DF3-EB7C048E4A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C19126-E96B-4CC1-9DF3-EB7C048E4A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C19126-E96B-4CC1-9DF3-EB7C048E4A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D958E98-0A5F-4454-9AF2-4205DED1369A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D958E98-0A5F-4454-9AF2-4205DED1369A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D958E98-0A5F-4454-9AF2-4205DED1369A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D958E98-0A5F-4454-9AF2-4205DED1369A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC830FCD-6A4B-46BF-8932-98E249365111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC830FCD-6A4B-46BF-8932-98E249365111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC830FCD-6A4B-46BF-8932-98E249365111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC830FCD-6A4B-46BF-8932-98E249365111}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D3559757-D114-4E00-B8AE-A49794EA2E58} = {53355B02-040E-4DC2-A23F-012DC3F81698}
-		{D299C9FB-E99E-4FBB-93A2-5B522F5B52F5} = {A3B7BB6D-1526-4DD8-8F79-F6DAD3B979D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44000CDF-AFD4-4B97-AD56-B6C145969ED3}
