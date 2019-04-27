@@ -26,10 +26,10 @@ namespace CursoOnline.DominioTest.Matriculas
             _alunoRepositorio = new Mock<IAlunoRepositorio>();
             _matriculaRepositorio = new Mock<IMatriculaRepositorio>();
 
-            _aluno = AlunoBuilder.Novo().ComId(23).ComPublicoAlvo(PublicoAlvo.Universitário).Build();
+            _aluno = AlunoBuilder.Novo().ComId(23).ComPublicoAlvo(TargetAudience.Universitário).Build();
             _alunoRepositorio.Setup(r => r.ObterPorId(_aluno.Id)).Returns(_aluno);
 
-            _curso = CursoBuilder.Novo().ComId(45).ComPublicoAlvo(PublicoAlvo.Universitário).Build();
+            _curso = CursoBuilder.Novo().ComId(45).ComPublicoAlvo(TargetAudience.Universitário).Build();
             _cursoRepositorio.Setup(r => r.ObterPorId(_curso.Id)).Returns(_curso);
 
             _matriculaDto = new MatriculaDto { AlunoId = _aluno.Id, CursoId = _curso.Id, ValorPago = _curso.Valor };
@@ -43,7 +43,7 @@ namespace CursoOnline.DominioTest.Matriculas
             Curso cursoInvalido = null;
             _cursoRepositorio.Setup(r => r.ObterPorId(_matriculaDto.CursoId)).Returns(cursoInvalido);
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     _criacaoDaMatricula.Criar(_matriculaDto))
                 .ComMensagem(Resource.CursoNaoEncontrado);
         }
@@ -54,7 +54,7 @@ namespace CursoOnline.DominioTest.Matriculas
             Aluno alunoInvalido = null;
             _alunoRepositorio.Setup(r => r.ObterPorId(_matriculaDto.AlunoId)).Returns(alunoInvalido);
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     _criacaoDaMatricula.Criar(_matriculaDto))
                 .ComMensagem(Resource.AlunoNaoEncontrado);
         }

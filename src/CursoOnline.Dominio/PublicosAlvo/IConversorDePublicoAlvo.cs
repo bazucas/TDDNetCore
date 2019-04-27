@@ -2,6 +2,6 @@
 {
     public interface IConversorDePublicoAlvo
     {
-        PublicoAlvo Converter(string publicoAlvo);
+        TargetAudience Converter(string publicoAlvo);
     }
 }

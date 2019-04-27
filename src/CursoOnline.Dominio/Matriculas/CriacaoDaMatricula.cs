@@ -25,7 +25,7 @@ namespace CursoOnline.Dominio.Matriculas
             var curso = _cursoRepositorio.ObterPorId(matriculaDto.CursoId);
             var aluno = _alunoRepositorio.ObterPorId(matriculaDto.AlunoId);
 
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(curso == null, Resource.CursoNaoEncontrado)
                 .Quando(aluno == null, Resource.AlunoNaoEncontrado)
                 .DispararExcecaoSeExistir();

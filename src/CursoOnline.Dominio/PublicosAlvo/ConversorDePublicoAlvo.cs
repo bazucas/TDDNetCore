@@ -5,10 +5,10 @@ namespace CursoOnline.Dominio.PublicosAlvo
 {
     public class ConversorDePublicoAlvo : IConversorDePublicoAlvo
     {
-        public PublicoAlvo Converter(string publicoAlvo)
+        public TargetAudience Converter(string publicoAlvo)
         {
-            ValidadorDeRegra.Novo()
-                .Quando(!Enum.TryParse<PublicoAlvo>(publicoAlvo, out var publicoAlvoConvertido), Resource.PublicoAlvoInvalido)
+            BaseValidator.Novo()
+                .Quando(!Enum.TryParse<TargetAudience>(publicoAlvo, out var publicoAlvoConvertido), Resource.PublicoAlvoInvalido)
                 .DispararExcecaoSeExistir();
 
             return publicoAlvoConvertido;

@@ -33,7 +33,7 @@ namespace CursoOnline.Dados.Migrations
 
                     b.Property<string>("Nome");
 
-                    b.Property<int>("PublicoAlvo");
+                    b.Property<int>("TargetAudience");
 
                     b.HasKey("Id");
 
@@ -52,7 +52,7 @@ namespace CursoOnline.Dados.Migrations
 
                     b.Property<string>("Nome");
 
-                    b.Property<int>("PublicoAlvo");
+                    b.Property<int>("TargetAudience");
 
                     b.Property<double>("Valor");
 

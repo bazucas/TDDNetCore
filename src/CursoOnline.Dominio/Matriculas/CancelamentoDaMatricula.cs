@@ -15,7 +15,7 @@ namespace CursoOnline.Dominio.Matriculas
         {
             var matricula = _matriculaRepositorio.ObterPorId(matriculaId);
 
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(matricula == null, Resource.MatriculaNaoEncontrada)
                 .DispararExcecaoSeExistir();
 

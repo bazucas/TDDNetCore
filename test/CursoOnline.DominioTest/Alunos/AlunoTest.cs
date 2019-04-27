@@ -27,7 +27,7 @@ namespace CursoOnline.DominioTest.Alunos
                 Nome = _faker.Person.FullName,
                 _faker.Person.Email,
                 Cpf = _faker.Person.Cpf(),
-                PublicoAlvo = Dominio.PublicosAlvo.PublicoAlvo.Empreendedor
+                PublicoAlvo = Dominio.PublicosAlvo.TargetAudience.Empreendedor
             };
 
             var aluno = new Aluno(alunoEsperado.Nome, alunoEsperado.Email, alunoEsperado.Cpf, alunoEsperado.PublicoAlvo);
@@ -51,7 +51,7 @@ namespace CursoOnline.DominioTest.Alunos
         [InlineData(null)]
         public void NaoDeveCriarComNomeInvalido(string nomeInvalido)
         {
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     AlunoBuilder.Novo().ComNome(nomeInvalido).Build())
                 .ComMensagem(Resource.NomeInvalido);
         }
@@ -63,7 +63,7 @@ namespace CursoOnline.DominioTest.Alunos
         [InlineData("email@invalido")]
         public void NaoDeveCriarComEmailInvalido(string emailInvalido)
         {
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     AlunoBuilder.Novo().ComEmail(emailInvalido).Build())
                 .ComMensagem(Resource.EmailInvalido);
         }
@@ -75,7 +75,7 @@ namespace CursoOnline.DominioTest.Alunos
         [InlineData("0000000000")]
         public void NaoDeveCriarComCpfInvalido(string cpfInvalido)
         {
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     AlunoBuilder.Novo().ComCpf(cpfInvalido).Build())
                 .ComMensagem(Resource.CpfInvalido);
         }

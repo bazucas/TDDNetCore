@@ -11,15 +11,15 @@ namespace CursoOnline.DominioTest.PublicosAlvo
         private readonly ConversorDePublicoAlvo _conversor = new ConversorDePublicoAlvo();
 
         [Theory]
-        [InlineData(PublicoAlvo.Empregado, "Empregado")]
-        [InlineData(PublicoAlvo.Empreendedor, "Empreendedor")]
-        [InlineData(PublicoAlvo.Estudante, "Estudante")]
-        [InlineData(PublicoAlvo.Universitário, "Universitário")]
-        public void DeveConverterPublicoAlvo(PublicoAlvo publicoAlvoEsperado, string publicoAlvoEmString)
+        [InlineData(TargetAudience.Empregado, "Empregado")]
+        [InlineData(TargetAudience.Empreendedor, "Empreendedor")]
+        [InlineData(TargetAudience.Estudante, "Estudante")]
+        [InlineData(TargetAudience.Universitário, "Universitário")]
+        public void DeveConverterPublicoAlvo(TargetAudience targetAudienceEsperado, string publicoAlvoEmString)
         {
             var publicoAlvoConvertido = _conversor.Converter(publicoAlvoEmString);
 
-            Assert.Equal(publicoAlvoEsperado, publicoAlvoConvertido);
+            Assert.Equal(targetAudienceEsperado, publicoAlvoConvertido);
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace CursoOnline.DominioTest.PublicosAlvo
         {
             const string publicoAlvoInvalido = "Invalido";
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     _conversor.Converter(publicoAlvoInvalido))
                 .ComMensagem(Resource.PublicoAlvoInvalido);
         }

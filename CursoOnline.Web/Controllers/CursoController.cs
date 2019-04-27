@@ -28,7 +28,7 @@ namespace CursoOnline.Web.Controllers
                     Id = c.Id,
                     Nome = c.Nome,
                     CargaHoraria = c.CargaHoraria,
-                    PublicoAlvo = c.PublicoAlvo.ToString(),
+                    PublicoAlvo = c.TargetAudience.ToString(),
                     Valor = c.Valor
                 });
                 return View("Index", PaginatedList<CursoParaListagemDto>.Create(dtos, Request));

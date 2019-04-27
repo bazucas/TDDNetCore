@@ -15,11 +15,11 @@ namespace CursoOnline.DominioTest._Builders
 
         public static MatriculaBuilder Novo()
         {
-            var curso = CursoBuilder.Novo().ComPublicoAlvo(PublicoAlvo.Empreendedor).Build();
+            var curso = CursoBuilder.Novo().ComPublicoAlvo(TargetAudience.Empreendedor).Build();
 
             return new MatriculaBuilder
             {
-                Aluno = AlunoBuilder.Novo().ComPublicoAlvo(PublicoAlvo.Empreendedor).Build(),
+                Aluno = AlunoBuilder.Novo().ComPublicoAlvo(TargetAudience.Empreendedor).Build(),
                 Curso = curso,
                 ValorPago = curso.Valor
             };

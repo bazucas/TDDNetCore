@@ -1,39 +1,37 @@
-using System;
 using System.Text.RegularExpressions;
-using CursoOnline.Dominio.Cursos;
 using CursoOnline.Dominio.PublicosAlvo;
 using CursoOnline.Dominio._Base;
 
 namespace CursoOnline.Dominio.Alunos
 {
-    public class Aluno : Entidade
+    public class Student : Entity
     {
         private readonly Regex _emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-        private readonly Regex _cpfRegex = new Regex(@"^\d{3}\.\d{3}\.\d{3}-\d{2}$");
-        public string Nome { get; private set; }
-        public string Cpf { get; private set; }
+        private readonly Regex _nifRegex = new Regex(@"^\d{3}\.\d{3}\.\d{3}-\d{2}$");
+        public string Name { get; private set; }
+        public string Nif { get; private set; }
         public string Email { get; private set; }
-        public PublicoAlvo PublicoAlvo { get; private set; }
+        public TargetAudience TargetAudience { get; private set; }
 
-        private Aluno() { }
+        private Student() { }
 
-        public Aluno(string nome, string email, string cpf, PublicoAlvo publicoAlvo)
+        public Student(string name, string email, string nif, TargetAudience targetAudience)
         {
-            ValidadorDeRegra.Novo()
-                .Quando(string.IsNullOrEmpty(nome), Resource.NomeInvalido)
+            BaseValidator.Novo()
+                .Quando(string.IsNullOrEmpty(name), Resource.NomeInvalido)
                 .Quando(string.IsNullOrEmpty(email) || !_emailRegex.Match(email).Success, Resource.EmailInvalido)
-                .Quando(string.IsNullOrEmpty(cpf) || !_cpfRegex.Match(cpf).Success, Resource.CpfInvalido)
+                .Quando(string.IsNullOrEmpty(nif) || !_nifRegex.Match(nif).Success, Resource.CpfInvalido)
                 .DispararExcecaoSeExistir();
 
-            Nome = nome;
-            Cpf = cpf;
+            Name = name;
+            Nif = nif;
             Email = email;
-            PublicoAlvo = publicoAlvo;
+            TargetAudience = targetAudience;
         }
 
-        public void AlterarNome(string nome)
+        public void ChangeName(string name)
         {
-            Nome = nome;
+            Name = name;
         }
     }
 }

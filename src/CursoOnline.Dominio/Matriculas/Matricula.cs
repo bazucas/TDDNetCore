@@ -4,7 +4,7 @@ using CursoOnline.Dominio._Base;
 
 namespace CursoOnline.Dominio.Matriculas
 {
-    public class Matricula : Entidade
+    public class Matricula : Entity
     {
         public Aluno Aluno { get; private set; }
         public Curso Curso { get; private set; }
@@ -18,12 +18,12 @@ namespace CursoOnline.Dominio.Matriculas
 
         public Matricula(Aluno aluno, Curso curso, double valorPago)
         {
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(aluno == null, Resource.AlunoInvalido)
                 .Quando(curso == null, Resource.CursoInvalido)
                 .Quando(valorPago < 1, Resource.ValorInvalido)
                 .Quando(curso != null && valorPago > curso.Valor, Resource.ValorPagoMaiorQueValorDoCurso)
-                .Quando(aluno != null && curso != null && aluno.PublicoAlvo.GetHashCode() != curso.PublicoAlvo.GetHashCode(), Resource.PublicosAlvoDiferentes)
+                .Quando(aluno != null && curso != null && aluno.PublicoAlvo.GetHashCode() != curso.TargetAudience.GetHashCode(), Resource.PublicosAlvoDiferentes)
                 .DispararExcecaoSeExistir();
 
             Aluno = aluno;
@@ -34,7 +34,7 @@ namespace CursoOnline.Dominio.Matriculas
 
         public void InformarNota(double notaDoAluno)
         {
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(notaDoAluno < 0 || notaDoAluno > 10, Resource.NotaDoAlunoInvalida)
                 .Quando(Cancelada, Resource.MatriculaCancelada)
                 .DispararExcecaoSeExistir();
@@ -45,7 +45,7 @@ namespace CursoOnline.Dominio.Matriculas
 
         public void Cancelar()
         {
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(CursoConcluido, Resource.MatriculaConcluida)
                 .DispararExcecaoSeExistir();
 

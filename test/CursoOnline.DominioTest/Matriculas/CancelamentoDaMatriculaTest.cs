@@ -36,7 +36,7 @@ namespace CursoOnline.DominioTest.Matriculas
             const int matriculaIdInvalida = 1;
             _matriculaRepositorio.Setup(r => r.ObterPorId(It.IsAny<int>())).Returns(matriculaInvalida);
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     _cancelamentoDaMatricula.Cancelar(matriculaIdInvalida))
                 .ComMensagem(Resource.MatriculaNaoEncontrada);
         }

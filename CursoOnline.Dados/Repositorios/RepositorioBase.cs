@@ -5,7 +5,7 @@ using CursoOnline.Dominio._Base;
 
 namespace CursoOnline.Dados.Repositorios
 {
-    public class RepositorioBase<TEntidade> : IRepositorio<TEntidade> where TEntidade : Entidade
+    public class RepositorioBase<TEntidade> : IRepositorio<TEntidade> where TEntidade : Entity
     {
         protected readonly ApplicationDbContext Context;
 

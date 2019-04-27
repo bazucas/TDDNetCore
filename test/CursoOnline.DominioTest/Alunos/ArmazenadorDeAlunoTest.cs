@@ -26,7 +26,7 @@ namespace CursoOnline.DominioTest.Alunos
                 Nome = _faker.Person.FullName,
                 Email = _faker.Person.Email,
                 Cpf = _faker.Person.Cpf(),
-                PublicoAlvo = PublicoAlvo.Empregado.ToString(),
+                PublicoAlvo = TargetAudience.Empregado.ToString(),
             };
             _alunoRepositorio = new Mock<IAlunoRepositorio>();
             var conversorDePublicoAlvo = new Mock<IConversorDePublicoAlvo>();
@@ -47,7 +47,7 @@ namespace CursoOnline.DominioTest.Alunos
             var alunoComMesmoCpf = AlunoBuilder.Novo().ComId(34).Build();
             _alunoRepositorio.Setup(r => r.ObterPeloCpf(_alunoDto.Cpf)).Returns(alunoComMesmoCpf);
 
-            Assert.Throws<ExcecaoDeDominio>(() => _armazenadorDeAluno.Armazenar(_alunoDto))
+            Assert.Throws<DomainException>(() => _armazenadorDeAluno.Armazenar(_alunoDto))
                 .ComMensagem(Resource.CpfJaCadastrado);
         }
 

@@ -15,7 +15,7 @@ namespace CursoOnline.DominioTest.Cursos
     {
         private readonly string _nome;
         private readonly double _cargaHoraria;
-        private readonly Dominio.PublicosAlvo.PublicoAlvo _publicoAlvo;
+        private readonly Dominio.PublicosAlvo.TargetAudience _targetAudience;
         private readonly double _valor;
         private readonly string _descricao;
         private readonly Faker _faker;
@@ -26,7 +26,7 @@ namespace CursoOnline.DominioTest.Cursos
 
             _nome = _faker.Random.Word();
             _cargaHoraria = _faker.Random.Double(50, 1000);
-            _publicoAlvo = PublicoAlvo.Estudante;
+            _targetAudience = TargetAudience.Estudante;
             _valor = _faker.Random.Double(100, 1000);
             _descricao = _faker.Lorem.Paragraph();
         }
@@ -38,7 +38,7 @@ namespace CursoOnline.DominioTest.Cursos
             {
                 Nome = _nome,
                 CargaHoraria = _cargaHoraria,
-                PublicoAlvo = _publicoAlvo,
+                PublicoAlvo = _targetAudience,
                 Valor = _valor,
                 Descricao = _descricao
             };
@@ -53,7 +53,7 @@ namespace CursoOnline.DominioTest.Cursos
         [InlineData(null)]
         public void NaoDeveCursoTerUmNomeInvalido(string nomeInvalido)
         {
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                 CursoBuilder.Novo().ComNome(nomeInvalido).Build())
                 .ComMensagem(Resource.NomeInvalido);
         }
@@ -64,7 +64,7 @@ namespace CursoOnline.DominioTest.Cursos
         [InlineData(-100)]
         public void NaoDeveCursoTerUmaCargaHorariaInvalida(double cargaHorariaInvalida)
         {
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                 CursoBuilder.Novo().ComCargaHoraria(cargaHorariaInvalida).Build())
                 .ComMensagem(Resource.CargaHorariaInvalida);
         }
@@ -75,7 +75,7 @@ namespace CursoOnline.DominioTest.Cursos
         [InlineData(-100)]
         public void NaoDeveCursoTerUmaUmValorInvalido(double valorInvalido)
         {
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                 CursoBuilder.Novo().ComValor(valorInvalido).Build())
                 .ComMensagem(Resource.ValorInvalido);
         }
@@ -98,7 +98,7 @@ namespace CursoOnline.DominioTest.Cursos
         {
             var curso = CursoBuilder.Novo().Build();
 
-            Assert.Throws<ExcecaoDeDominio>(() => curso.AlterarNome(nomeInvalido))
+            Assert.Throws<DomainException>(() => curso.AlterarNome(nomeInvalido))
                 .ComMensagem(Resource.NomeInvalido);
         }
 
@@ -121,7 +121,7 @@ namespace CursoOnline.DominioTest.Cursos
         {
             var curso = CursoBuilder.Novo().Build();
 
-            Assert.Throws<ExcecaoDeDominio>(() => curso.AlterarCargaHoraria(cargaHorariaInvalida))
+            Assert.Throws<DomainException>(() => curso.AlterarCargaHoraria(cargaHorariaInvalida))
                 .ComMensagem(Resource.CargaHorariaInvalida);
         }
 
@@ -144,7 +144,7 @@ namespace CursoOnline.DominioTest.Cursos
         {
             var curso = CursoBuilder.Novo().Build();
 
-            Assert.Throws<ExcecaoDeDominio>(() => curso.AlterarValor(valorInvalido))
+            Assert.Throws<DomainException>(() => curso.AlterarValor(valorInvalido))
                 .ComMensagem(Resource.ValorInvalido);
         }
     }

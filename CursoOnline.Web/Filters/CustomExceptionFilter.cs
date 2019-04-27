@@ -14,9 +14,9 @@ namespace CursoOnline.Web.Filters
             if (isAjaxCall)
             {
                 context.HttpContext.Response.ContentType = "application/json";
-                context.HttpContext.Response.StatusCode = context.Exception is ExcecaoDeDominio ? 502 : 500;
-                context.Result = context.Exception is ExcecaoDeDominio dominio ?
-                    new JsonResult(dominio.MensagensDeErro) :
+                context.HttpContext.Response.StatusCode = context.Exception is DomainException ? 502 : 500;
+                context.Result = context.Exception is DomainException dominio ?
+                    new JsonResult(dominio.ErrorMessages) :
                     new JsonResult("An error ocorred");
                 context.ExceptionHandled = true;
             }

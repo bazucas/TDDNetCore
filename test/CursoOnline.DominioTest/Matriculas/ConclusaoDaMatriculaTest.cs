@@ -38,7 +38,7 @@ namespace CursoOnline.DominioTest.Matriculas
             const double notaDoAluno = 2;
             _matriculaRepositorio.Setup(r => r.ObterPorId(It.IsAny<int>())).Returns(matriculaInvalida);
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     _conclusaoDaMatricula.Concluir(matriculaIdInvalida, notaDoAluno))
                 .ComMensagem(Resource.MatriculaNaoEncontrada);
         }

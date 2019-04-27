@@ -16,10 +16,10 @@ namespace CursoOnline.DominioTest.Matriculas
         [Fact]
         public void DeveCriarMatricula()
         {
-            var curso = CursoBuilder.Novo().ComPublicoAlvo(PublicoAlvo.Empreendedor).Build();
+            var curso = CursoBuilder.Novo().ComPublicoAlvo(TargetAudience.Empreendedor).Build();
             var matriculaEsperada = new
             {
-                Aluno = AlunoBuilder.Novo().ComPublicoAlvo(PublicoAlvo.Empreendedor).Build(),
+                Aluno = AlunoBuilder.Novo().ComPublicoAlvo(TargetAudience.Empreendedor).Build(),
                 Curso = curso,
                 ValorPago = curso.Valor
             };
@@ -34,7 +34,7 @@ namespace CursoOnline.DominioTest.Matriculas
         {
             Aluno alunoInvalido = null;
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     MatriculaBuilder.Novo().ComAluno(alunoInvalido).Build())
                 .ComMensagem(Resource.AlunoInvalido);
         }
@@ -44,7 +44,7 @@ namespace CursoOnline.DominioTest.Matriculas
         {
             Curso cursoInvalido = null;
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     MatriculaBuilder.Novo().ComCurso(cursoInvalido).Build())
                 .ComMensagem(Resource.CursoInvalido);
         }
@@ -54,7 +54,7 @@ namespace CursoOnline.DominioTest.Matriculas
         {
             const double valorPagoInvalido = 0;
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     MatriculaBuilder.Novo().ComValorPago(valorPagoInvalido).Build())
                 .ComMensagem(Resource.ValorInvalido);
         }
@@ -65,7 +65,7 @@ namespace CursoOnline.DominioTest.Matriculas
             var curso = CursoBuilder.Novo().ComValor(100).Build();
             var valorPagoMaiorQueCurso = curso.Valor + 1;
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     MatriculaBuilder.Novo().ComCurso(curso).ComValorPago(valorPagoMaiorQueCurso).Build())
                 .ComMensagem(Resource.ValorPagoMaiorQueValorDoCurso);
         }
@@ -73,7 +73,7 @@ namespace CursoOnline.DominioTest.Matriculas
         [Fact]
         public void DeveIndicarQueHouveDescontoNaMatricula()
         {
-            var curso = CursoBuilder.Novo().ComValor(100).ComPublicoAlvo(PublicoAlvo.Empreendedor).Build();
+            var curso = CursoBuilder.Novo().ComValor(100).ComPublicoAlvo(TargetAudience.Empreendedor).Build();
             var valorPagoComDesconto = curso.Valor - 1;
 
             var matricula = MatriculaBuilder.Novo().ComCurso(curso).ComValorPago(valorPagoComDesconto).Build();
@@ -84,10 +84,10 @@ namespace CursoOnline.DominioTest.Matriculas
         [Fact]
         public void NaoDevePublicoAlvoDeAlunoECursoSeremDiferentes()
         {
-            var curso = CursoBuilder.Novo().ComPublicoAlvo(PublicoAlvo.Empregado).Build();
-            var aluno = AlunoBuilder.Novo().ComPublicoAlvo(PublicoAlvo.Universitário).Build();
+            var curso = CursoBuilder.Novo().ComPublicoAlvo(TargetAudience.Empregado).Build();
+            var aluno = AlunoBuilder.Novo().ComPublicoAlvo(TargetAudience.Universitário).Build();
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     MatriculaBuilder.Novo().ComAluno(aluno).ComCurso(curso).Build())
                 .ComMensagem(Resource.PublicosAlvoDiferentes);
         }
@@ -121,7 +121,7 @@ namespace CursoOnline.DominioTest.Matriculas
         {
             var matricula = MatriculaBuilder.Novo().Build();
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     matricula.InformarNota(notaDoAlunoInvalida))
                 .ComMensagem(Resource.NotaDoAlunoInvalida);
         }
@@ -142,7 +142,7 @@ namespace CursoOnline.DominioTest.Matriculas
             const double notaDoAluno = 3;
             var matricula = MatriculaBuilder.Novo().ComCancelada(true).Build();
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     matricula.InformarNota(notaDoAluno))
                 .ComMensagem(Resource.MatriculaCancelada);
         }
@@ -152,7 +152,7 @@ namespace CursoOnline.DominioTest.Matriculas
         {
             var matricula = MatriculaBuilder.Novo().ComConcluido(true).Build();
 
-            Assert.Throws<ExcecaoDeDominio>(() =>
+            Assert.Throws<DomainException>(() =>
                     matricula.Cancelar())
                 .ComMensagem(Resource.MatriculaConcluida);
         }

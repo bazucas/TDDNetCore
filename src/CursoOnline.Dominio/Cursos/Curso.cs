@@ -3,19 +3,19 @@ using CursoOnline.Dominio._Base;
 
 namespace CursoOnline.Dominio.Cursos
 {
-    public class Curso : Entidade
+    public class Curso : Entity
     {
         public string Nome { get; private set; }
         public string Descricao { get; private set; }
         public double CargaHoraria { get; private set; }
-        public PublicoAlvo PublicoAlvo { get; private set; }
+        public TargetAudience TargetAudience { get; private set; }
         public double Valor { get; private set; }
 
         private Curso() { }
 
-        public Curso(string nome, string descricao, double cargaHoraria, PublicoAlvo publicoAlvo, double valor)
+        public Curso(string nome, string descricao, double cargaHoraria, TargetAudience targetAudience, double valor)
         {
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(string.IsNullOrEmpty(nome), Resource.NomeInvalido)
                 .Quando(cargaHoraria < 1, Resource.CargaHorariaInvalida)
                 .Quando(valor < 1, Resource.ValorInvalido)
@@ -24,13 +24,13 @@ namespace CursoOnline.Dominio.Cursos
             Nome = nome;
             Descricao = descricao;
             CargaHoraria = cargaHoraria;
-            PublicoAlvo = publicoAlvo;
+            TargetAudience = targetAudience;
             Valor = valor;
         }
 
         public void AlterarNome(string nome)
         {
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(string.IsNullOrEmpty(nome), Resource.NomeInvalido)
                 .DispararExcecaoSeExistir();
 
@@ -39,7 +39,7 @@ namespace CursoOnline.Dominio.Cursos
 
         public void AlterarCargaHoraria(double cargaHoraria)
         {
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(cargaHoraria < 1, Resource.CargaHorariaInvalida)
                 .DispararExcecaoSeExistir();
 
@@ -48,7 +48,7 @@ namespace CursoOnline.Dominio.Cursos
 
         public void AlterarValor(double valor)
         {
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(valor < 1, Resource.ValorInvalido)
                 .DispararExcecaoSeExistir();
 

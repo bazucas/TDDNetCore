@@ -18,7 +18,7 @@ namespace CursoOnline.Dominio.Alunos
         {
             var alunoComMesmoCpf = _alunoRepositorio.ObterPeloCpf(alunoDto.Cpf);
 
-            ValidadorDeRegra.Novo()
+            BaseValidator.Novo()
                 .Quando(alunoComMesmoCpf != null && alunoComMesmoCpf.Id != alunoDto.Id, Resource.CpfJaCadastrado)
                 .DispararExcecaoSeExistir();
 
