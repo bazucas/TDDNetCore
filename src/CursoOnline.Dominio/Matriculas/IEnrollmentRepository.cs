@@ -2,7 +2,7 @@
 
 namespace CursoOnline.Dominio.Matriculas
 {
-    public interface IMatriculaRepositorio : IRepositorio<Matricula>
+    public interface IEnrollmentRepository : IRepository<Enrollment>
     {
     }
 }

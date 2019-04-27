@@ -1,6 +1,5 @@
 ﻿@using CursoOnline.Dominio.Cursos
-@using CursoOnline.Web.Util
-@model CursoOnline.Web.Util.PaginatedList<CursoParaListagemDto>
+@model CursoOnline.Web.Util.PaginatedList<CoursesListDto>
 @{
     ViewData["Title"] = "Listagem de cursos";
 }
@@ -9,7 +8,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="/Cursos" class="btn">Voltar</a>
+            <a href="/Curso" class="btn">Voltar</a>
         </div>
     </div>
 
@@ -23,10 +22,10 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th>Name</th>
                         <th>Carga Horária</th>
                         <th>Publico Alvo</th>
-                        <th>Valor</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,16 +33,16 @@
                     {
                         <tr>
                             <td>
-                                @item.Nome
+                                @item.Name
                             </td>
                             <td>
-                                @item.CargaHoraria
+                                @item.Hours
                             </td>
                             <td>
-                                @item.PublicoAlvo
+                                @item.TargetAudience
                             </td>
                             <td>
-                                @item.Valor
+                                @item.Amount
                             </td>
                             <td>
                                 <a href="/Curso/Editar/@item.Id" class="btn">Editar</a>

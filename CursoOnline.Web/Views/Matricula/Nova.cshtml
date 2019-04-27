@@ -1,4 +1,4 @@
-﻿@model CursoOnline.Dominio.Matriculas.MatriculaDto
+﻿@model CursoOnline.Dominio.Matriculas.EnrollmentDto
 @{
     ViewData["Title"] = "Cursos";
 }
@@ -12,7 +12,7 @@
     </div>
     <div class="row header">
         <div class="col-md-1">
-            <h3>Matriculas</h3>
+            <h3>Enrollments</h3>
         </div>
     </div>
     <div class="row form-wrapper">
@@ -22,25 +22,24 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Aluno</label>
                     <div class="col-md-10">
-                        <select class="form-control" asp-for="AlunoId" asp-items="@(new SelectList(@ViewBag.Alunos, "Id", "Nome"))">
+                        <select class="form-control" asp-for="StudentId" asp-items="@(new SelectList(@ViewBag.Alunos, "Id", "Name"))">
                             <option></option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">Curso</label>
+                    <label class="col-md-2 control-label">Course</label>
                     <div class="col-md-10">
-                        <select class="form-control" asp-for="CursoId" asp-items="@(new SelectList(@ViewBag.Cursos, "Id", "Nome"))">
+                        <select class="form-control" asp-for="CourseId" asp-items="@(new SelectList(@ViewBag.Cursos, "Id", "Name"))">
                             <option></option>
                         </select>
                     </div>
-                </div>
-                </div>
+                </div>      
                 <div class="form-group">
-                    <label class="col-md-2 control-label">Valor</label>
+                    <label class="col-md-2 control-label">Amount</label>
                     <div class="col-md-2">
-                        <input class="form-control" asp-for="ValorPago">
-                        <span asp-validation-for="ValorPago" class="text-danger"></span>
+                        <input class="form-control" asp-for="PaidAmount">
+                        <span asp-validation-for="PaidAmount" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">

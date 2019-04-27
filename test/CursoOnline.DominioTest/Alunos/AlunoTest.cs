@@ -27,10 +27,10 @@ namespace CursoOnline.DominioTest.Alunos
                 Nome = _faker.Person.FullName,
                 _faker.Person.Email,
                 Cpf = _faker.Person.Cpf(),
-                PublicoAlvo = Dominio.PublicosAlvo.TargetAudience.Empreendedor
+                PublicoAlvo = Dominio.PublicosAlvo.TargetAudience.Entrepreneur
             };
 
-            var aluno = new Aluno(alunoEsperado.Nome, alunoEsperado.Email, alunoEsperado.Cpf, alunoEsperado.PublicoAlvo);
+            var aluno = new Student(alunoEsperado.Nome, alunoEsperado.Email, alunoEsperado.Cpf, alunoEsperado.PublicoAlvo);
 
             alunoEsperado.ToExpectedObject().ShouldMatch(aluno);
         }
@@ -39,11 +39,11 @@ namespace CursoOnline.DominioTest.Alunos
         public void DeveAlterarNome()
         {
             var novoNomeEsperado = _faker.Person.FullName;
-            var aluno = AlunoBuilder.Novo().Build();
+            var aluno = StudentBuilder.New().Build();
 
-            aluno.AlterarNome(novoNomeEsperado);
+            aluno.ChangeName(novoNomeEsperado);
 
-            Assert.Equal(novoNomeEsperado, aluno.Nome);
+            Assert.Equal(novoNomeEsperado, aluno.Name);
         }
 
         [Theory]
@@ -52,8 +52,8 @@ namespace CursoOnline.DominioTest.Alunos
         public void NaoDeveCriarComNomeInvalido(string nomeInvalido)
         {
             Assert.Throws<DomainException>(() =>
-                    AlunoBuilder.Novo().ComNome(nomeInvalido).Build())
-                .ComMensagem(Resource.NomeInvalido);
+                    StudentBuilder.New().WithName(nomeInvalido).Build())
+                .ComMensagem(Resource.InvalidName);
         }
 
         [Theory]
@@ -64,8 +64,8 @@ namespace CursoOnline.DominioTest.Alunos
         public void NaoDeveCriarComEmailInvalido(string emailInvalido)
         {
             Assert.Throws<DomainException>(() =>
-                    AlunoBuilder.Novo().ComEmail(emailInvalido).Build())
-                .ComMensagem(Resource.EmailInvalido);
+                    StudentBuilder.New().WithEmail(emailInvalido).Build())
+                .ComMensagem(Resource.InvalidEmail);
         }
 
         [Theory]
@@ -76,8 +76,8 @@ namespace CursoOnline.DominioTest.Alunos
         public void NaoDeveCriarComCpfInvalido(string cpfInvalido)
         {
             Assert.Throws<DomainException>(() =>
-                    AlunoBuilder.Novo().ComCpf(cpfInvalido).Build())
-                .ComMensagem(Resource.CpfInvalido);
+                    StudentBuilder.New().WithNif(cpfInvalido).Build())
+                .ComMensagem(Resource.InvalidNif);
         }
     }
 }

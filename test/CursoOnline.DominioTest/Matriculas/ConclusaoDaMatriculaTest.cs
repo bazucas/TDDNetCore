@@ -9,13 +9,13 @@ namespace CursoOnline.DominioTest.Matriculas
 {
     public class ConclusaoDaMatriculaTest
     {
-        private readonly Mock<IMatriculaRepositorio> _matriculaRepositorio;
-        private readonly ConclusaoDaMatricula _conclusaoDaMatricula;
+        private readonly Mock<IEnrollmentRepository> _matriculaRepositorio;
+        private readonly EnrollmentConclusion _enrollmentConclusion;
 
         public ConclusaoDaMatriculaTest()
         {
-            _matriculaRepositorio = new Mock<IMatriculaRepositorio>();
-            _conclusaoDaMatricula = new ConclusaoDaMatricula(_matriculaRepositorio.Object);
+            _matriculaRepositorio = new Mock<IEnrollmentRepository>();
+            _enrollmentConclusion = new EnrollmentConclusion(_matriculaRepositorio.Object);
         }
 
         [Fact]
@@ -23,24 +23,23 @@ namespace CursoOnline.DominioTest.Matriculas
         {
             const double notaDoAlunoEsperada = 8;
             var matricula = MatriculaBuilder.Novo().Build();
-            _matriculaRepositorio.Setup(r => r.ObterPorId(matricula.Id)).Returns(matricula);
+            _matriculaRepositorio.Setup(r => r.GetById(matricula.Id)).Returns(matricula);
 
-            _conclusaoDaMatricula.Concluir(matricula.Id, notaDoAlunoEsperada);
+            _enrollmentConclusion.Concluir(matricula.Id, notaDoAlunoEsperada);
 
-            Assert.Equal(notaDoAlunoEsperada, matricula.NotaDoAluno);
+            Assert.Equal(notaDoAlunoEsperada, matricula.StudentGrade);
         }
 
         [Fact]
         public void DeveNotificarQuandoMatriculaNaoEncontrada()
         {
-            Matricula matriculaInvalida = null;
             const int matriculaIdInvalida = 1;
             const double notaDoAluno = 2;
-            _matriculaRepositorio.Setup(r => r.ObterPorId(It.IsAny<int>())).Returns(matriculaInvalida);
+            _matriculaRepositorio.Setup(r => r.GetById(It.IsAny<int>())).Returns((Enrollment) null);
 
             Assert.Throws<DomainException>(() =>
-                    _conclusaoDaMatricula.Concluir(matriculaIdInvalida, notaDoAluno))
-                .ComMensagem(Resource.MatriculaNaoEncontrada);
+                    _enrollmentConclusion.Concluir(matriculaIdInvalida, notaDoAluno))
+                .ComMensagem(Resource.EnrollmentNotFound);
         }
     }
 }

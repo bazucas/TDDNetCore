@@ -8,45 +8,45 @@ namespace CursoOnline.Web.Controllers
 {
     public class CursoController : Controller
     {
-        private readonly ArmazenadorDeCurso _armazenadorDeCurso;
-        private readonly IRepositorio<Curso> _cursoRepositorio;
+        private readonly CourseStorer _courseStorer;
+        private readonly IRepository<Course> _cursoRepository;
 
-        public CursoController(ArmazenadorDeCurso armazenadorDeCurso, IRepositorio<Curso> cursoRepositorio)
+        public CursoController(CourseStorer courseStorer, IRepository<Course> cursoRepository)
         {
-            _armazenadorDeCurso = armazenadorDeCurso;
-            _cursoRepositorio = cursoRepositorio;
+            _courseStorer = courseStorer;
+            _cursoRepository = cursoRepository;
         }
 
         public IActionResult Index()
         {
-            var cursos = _cursoRepositorio.Consultar();
+            var cursos = _cursoRepository.Get();
 
             if (cursos.Any())
             {
-                var dtos = cursos.Select(c => new CursoParaListagemDto
+                var dtos = cursos.Select(c => new CoursesListDto
                 {
                     Id = c.Id,
-                    Nome = c.Nome,
-                    CargaHoraria = c.CargaHoraria,
-                    PublicoAlvo = c.TargetAudience.ToString(),
-                    Valor = c.Valor
+                    Name = c.Name,
+                    Hours = c.Hours,
+                    TargetAudience = c.TargetAudience.ToString(),
+                    Amount = c.Amount
                 });
-                return View("Index", PaginatedList<CursoParaListagemDto>.Create(dtos, Request));
+                return View("Index", PaginatedList<CoursesListDto>.Create(dtos, Request));
             }
 
-            return View("Index", PaginatedList<CursoParaListagemDto>.Create(null, Request));
+            return View("Index", PaginatedList<CoursesListDto>.Create(null, Request));
         }
 
         public IActionResult Editar(int id)
         {
-            var curso = _cursoRepositorio.ObterPorId(id);
-            var dto = new CursoDto
+            var curso = _cursoRepository.GetById(id);
+            var dto = new CourseDto
             {
                 Id = curso.Id,
-                Nome = curso.Nome,
-                Descricao = curso.Descricao,
-                CargaHoraria = curso.CargaHoraria,
-                Valor = curso.Valor
+                Name = curso.Name,
+                Description = curso.Description,
+                Hours = curso.Hours,
+                Amount = curso.Amount
             };
 
             return View("NovoOuEditar", dto);
@@ -54,13 +54,13 @@ namespace CursoOnline.Web.Controllers
 
         public IActionResult Novo()
         {
-            return View("NovoOuEditar", new CursoDto());
+            return View("NovoOuEditar", new CourseDto());
         }
 
         [HttpPost]
-        public IActionResult Salvar(CursoDto model)
+        public IActionResult Salvar(CourseDto model)
         {
-            _armazenadorDeCurso.Armazenar(model);
+            _courseStorer.Store(model);
             return Ok();
         }
     }

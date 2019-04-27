@@ -10,9 +10,9 @@ namespace CursoOnline.Dados.Contextos
     {
         public ApplicationDbContext(DbContextOptions options) : base(options){}
 
-        public DbSet<Curso> Cursos { get; set; }
-        public DbSet<Aluno> Alunos { get; set; }
-        public DbSet<Matricula> Matriculas { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
         public async Task Commit()
         {

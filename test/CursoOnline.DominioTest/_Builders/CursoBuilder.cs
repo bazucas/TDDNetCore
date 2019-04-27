@@ -11,7 +11,7 @@ namespace CursoOnline.DominioTest._Builders
     {
         private string _nome = "Informática básica";
         private double _cargaHoraria = 80;
-        private TargetAudience _targetAudience = TargetAudience.Estudante;
+        private TargetAudience _targetAudience = TargetAudience.Student;
         private double _valor = 950;
         private string _descricao = "Uma descrição";
         private int _id;
@@ -57,9 +57,9 @@ namespace CursoOnline.DominioTest._Builders
             return this;
         }
 
-        public Curso Build()
+        public Course Build()
         {
-            var curso = new Curso(_nome, _descricao, _cargaHoraria, _targetAudience, _valor);
+            var curso = new Course(_nome, _descricao, _cargaHoraria, _targetAudience, _valor);
 
             if (_id > 0)
             {

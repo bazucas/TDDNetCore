@@ -7,33 +7,33 @@ namespace CursoOnline.DominioTest._Builders
 {
     public class MatriculaBuilder
     {
-        protected Aluno Aluno;
-        protected Curso Curso;
+        protected Student Aluno;
+        protected Course Course;
         protected double ValorPago;
         protected bool Cancelada;
         protected bool Concluido;
 
         public static MatriculaBuilder Novo()
         {
-            var curso = CursoBuilder.Novo().ComPublicoAlvo(TargetAudience.Empreendedor).Build();
+            var curso = CursoBuilder.Novo().ComPublicoAlvo(TargetAudience.Entrepreneur).Build();
 
             return new MatriculaBuilder
             {
-                Aluno = AlunoBuilder.Novo().ComPublicoAlvo(TargetAudience.Empreendedor).Build(),
-                Curso = curso,
-                ValorPago = curso.Valor
+                Aluno = StudentBuilder.New().WithTargetAudience(TargetAudience.Entrepreneur).Build(),
+                Course = curso,
+                ValorPago = curso.Amount
             };
         }
 
-        public MatriculaBuilder ComAluno(Aluno aluno)
+        public MatriculaBuilder ComAluno(Student aluno)
         {
             Aluno = aluno;
             return this;
         }
 
-        public MatriculaBuilder ComCurso(Curso curso)
+        public MatriculaBuilder ComCurso(Course course)
         {
-            Curso = curso;
+            Course = course;
             return this;
         }
 
@@ -55,17 +55,17 @@ namespace CursoOnline.DominioTest._Builders
             return this;
         }
 
-        public Matricula Build()
+        public Enrollment Build()
         {
-            var matricula = new Matricula(Aluno, Curso, ValorPago);
+            var matricula = new Enrollment(Aluno, Course, ValorPago);
 
             if (Cancelada)
-                matricula.Cancelar();
+                matricula.Cancel();
 
             if (Concluido)
             {
                 const double notaDoAluno = 7;
-                matricula.InformarNota(notaDoAluno);
+                matricula.ShowGrade(notaDoAluno);
             }
 
             return matricula;

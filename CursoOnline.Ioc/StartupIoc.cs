@@ -18,17 +18,17 @@ namespace CursoOnline.Ioc
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration["ConnectionString"]));
-            services.AddScoped(typeof(IRepositorio<>), typeof(RepositorioBase<>));
-            services.AddScoped(typeof(ICursoRepositorio), typeof(CursoRepositorio));
-            services.AddScoped(typeof(IAlunoRepositorio), typeof(AlunoRepositorio));
-            services.AddScoped(typeof(IMatriculaRepositorio), typeof(MatriculaRepositorio));
+            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
+            services.AddScoped(typeof(ICourseRepository), typeof(CourseRepository));
+            services.AddScoped(typeof(IStudentRepository), typeof(StudentRepository));
+            services.AddScoped(typeof(IEnrollmentRepository), typeof(EnrollmentRepository));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IConversorDePublicoAlvo), typeof(ConversorDePublicoAlvo));
-            services.AddScoped<ArmazenadorDeCurso>();
-            services.AddScoped<ArmazenadorDeAluno>();
-            services.AddScoped<CriacaoDaMatricula>();
-            services.AddScoped<ConclusaoDaMatricula>();
-            services.AddScoped<CancelamentoDaMatricula>();
+            services.AddScoped<CourseStorer>();
+            services.AddScoped<StudentStorer>();
+            services.AddScoped<EnrollmentCreation>();
+            services.AddScoped<EnrollmentConclusion>();
+            services.AddScoped<EnrollmentCancelation>();
         }
     }
 }

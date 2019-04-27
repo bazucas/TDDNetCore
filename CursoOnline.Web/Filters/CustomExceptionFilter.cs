@@ -9,7 +9,7 @@ namespace CursoOnline.Web.Filters
     {
         public override void OnException(ExceptionContext context)
         {
-            bool isAjaxCall = context.HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            var isAjaxCall = context.HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
             if (isAjaxCall)
             {

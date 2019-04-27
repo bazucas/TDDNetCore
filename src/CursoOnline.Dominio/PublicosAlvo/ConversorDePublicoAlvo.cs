@@ -7,11 +7,11 @@ namespace CursoOnline.Dominio.PublicosAlvo
     {
         public TargetAudience Converter(string publicoAlvo)
         {
-            BaseValidator.Novo()
-                .Quando(!Enum.TryParse<TargetAudience>(publicoAlvo, out var publicoAlvoConvertido), Resource.PublicoAlvoInvalido)
-                .DispararExcecaoSeExistir();
+            BaseValidator.New()
+                .When(!Enum.TryParse<TargetAudience>(publicoAlvo, out var targetAudienceConverted), Resource.InvalidTargetAudience)
+                .TriggersIfExceptionExists();
 
-            return publicoAlvoConvertido;
+            return targetAudienceConverted;
         }
     }
 }

@@ -11,22 +11,22 @@ using Xunit.Abstractions;
 
 namespace CursoOnline.DominioTest.Cursos
 {
-    public class CursoTest
+    public class CourseTest
     {
         private readonly string _nome;
         private readonly double _cargaHoraria;
-        private readonly Dominio.PublicosAlvo.TargetAudience _targetAudience;
+        private readonly TargetAudience _targetAudience;
         private readonly double _valor;
         private readonly string _descricao;
         private readonly Faker _faker;
 
-        public CursoTest()
+        public CourseTest()
         {
             _faker = new Faker();
 
             _nome = _faker.Random.Word();
             _cargaHoraria = _faker.Random.Double(50, 1000);
-            _targetAudience = TargetAudience.Estudante;
+            _targetAudience = TargetAudience.Student;
             _valor = _faker.Random.Double(100, 1000);
             _descricao = _faker.Lorem.Paragraph();
         }
@@ -43,7 +43,7 @@ namespace CursoOnline.DominioTest.Cursos
                 Descricao = _descricao
             };
 
-            var curso = new Curso(cursoEsperado.Nome, cursoEsperado.Descricao, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor);
+            var curso = new Course(cursoEsperado.Nome, cursoEsperado.Descricao, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor);
 
             cursoEsperado.ToExpectedObject().ShouldMatch(curso);
         }
@@ -55,7 +55,7 @@ namespace CursoOnline.DominioTest.Cursos
         {
             Assert.Throws<DomainException>(() =>
                 CursoBuilder.Novo().ComNome(nomeInvalido).Build())
-                .ComMensagem(Resource.NomeInvalido);
+                .ComMensagem(Resource.InvalidName);
         }
 
         [Theory]
@@ -66,7 +66,7 @@ namespace CursoOnline.DominioTest.Cursos
         {
             Assert.Throws<DomainException>(() =>
                 CursoBuilder.Novo().ComCargaHoraria(cargaHorariaInvalida).Build())
-                .ComMensagem(Resource.CargaHorariaInvalida);
+                .ComMensagem(Resource.InvalidHours);
         }
 
         [Theory]
@@ -77,7 +77,7 @@ namespace CursoOnline.DominioTest.Cursos
         {
             Assert.Throws<DomainException>(() =>
                 CursoBuilder.Novo().ComValor(valorInvalido).Build())
-                .ComMensagem(Resource.ValorInvalido);
+                .ComMensagem(Resource.InvalidAmount);
         }
 
         [Fact]
@@ -86,9 +86,9 @@ namespace CursoOnline.DominioTest.Cursos
             var nomeEsperado = _faker.Person.FullName;
             var curso = CursoBuilder.Novo().Build();
 
-            curso.AlterarNome(nomeEsperado);
+            curso.ChangeName(nomeEsperado);
 
-            Assert.Equal(nomeEsperado, curso.Nome);
+            Assert.Equal(nomeEsperado, curso.Name);
         }
 
         [Theory]
@@ -98,8 +98,8 @@ namespace CursoOnline.DominioTest.Cursos
         {
             var curso = CursoBuilder.Novo().Build();
 
-            Assert.Throws<DomainException>(() => curso.AlterarNome(nomeInvalido))
-                .ComMensagem(Resource.NomeInvalido);
+            Assert.Throws<DomainException>(() => curso.ChangeName(nomeInvalido))
+                .ComMensagem(Resource.InvalidName);
         }
 
         [Fact]
@@ -108,9 +108,9 @@ namespace CursoOnline.DominioTest.Cursos
             var cargaHorariaEsperada = 20.5;
             var curso = CursoBuilder.Novo().Build();
 
-            curso.AlterarCargaHoraria(cargaHorariaEsperada);
+            curso.ChangeHours(cargaHorariaEsperada);
 
-            Assert.Equal(cargaHorariaEsperada, curso.CargaHoraria);
+            Assert.Equal(cargaHorariaEsperada, curso.Hours);
         }
 
         [Theory]
@@ -121,8 +121,8 @@ namespace CursoOnline.DominioTest.Cursos
         {
             var curso = CursoBuilder.Novo().Build();
 
-            Assert.Throws<DomainException>(() => curso.AlterarCargaHoraria(cargaHorariaInvalida))
-                .ComMensagem(Resource.CargaHorariaInvalida);
+            Assert.Throws<DomainException>(() => curso.ChangeHours(cargaHorariaInvalida))
+                .ComMensagem(Resource.InvalidHours);
         }
 
         [Fact]
@@ -131,9 +131,9 @@ namespace CursoOnline.DominioTest.Cursos
             var valorEsperado = 234.99;
             var curso = CursoBuilder.Novo().Build();
 
-            curso.AlterarValor(valorEsperado);
+            curso.ChangeAmount(valorEsperado);
 
-            Assert.Equal(valorEsperado, curso.Valor);
+            Assert.Equal(valorEsperado, curso.Amount);
         }
 
         [Theory]
@@ -144,8 +144,8 @@ namespace CursoOnline.DominioTest.Cursos
         {
             var curso = CursoBuilder.Novo().Build();
 
-            Assert.Throws<DomainException>(() => curso.AlterarValor(valorInvalido))
-                .ComMensagem(Resource.ValorInvalido);
+            Assert.Throws<DomainException>(() => curso.ChangeAmount(valorInvalido))
+                .ComMensagem(Resource.InvalidAmount);
         }
     }
 }

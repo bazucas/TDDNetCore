@@ -25,7 +25,7 @@ namespace CursoOnline.Web.Util
         public static PaginatedList<T> Create(IEnumerable<T> source, HttpRequest request)
         {
             const int pageSize = 10;
-            int.TryParse(request.Query["page"], out int pageIndex);
+            int.TryParse(request.Query["page"], out var pageIndex);
             pageIndex = pageIndex > 0 ? pageIndex : 1;
 
             var enumerable = source == null ? new List<T>() : source.ToList();

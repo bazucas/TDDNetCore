@@ -1,4 +1,4 @@
-﻿@model CursoOnline.Dominio.Alunos.AlunoDto
+﻿@model CursoOnline.Dominio.Alunos.StudentDto
 @{
     ViewData["Title"] = "Aluno";
 }
@@ -21,17 +21,17 @@
                   data-ajax="true" data-ajax-method="POST" data-ajax-failure="formQuandoFalha" data-ajax-success="window.location = '/Aluno'">
                 <input type="hidden" class="form-control" asp-for="Id">
                 <div class="form-group">
-                    <label class="col-md-2 control-label">Nome</label>
+                    <label class="col-md-2 control-label">Name</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" asp-for="Nome">
-                        <span asp-validation-for="Nome" class="text-danger"></span>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">CPF</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" asp-for="Cpf">
-                        <span asp-validation-for="Cpf" class="text-danger"></span>
+                        <input type="text" class="form-control" asp-for="Nif">
+                        <span asp-validation-for="Nif" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -44,11 +44,11 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Publico</label>
                     <div class="col-md-2">
-                        <select class="form-control" asp-for="PublicoAlvo">
-                            <option value="Estudante">Estudante</option>
-                            <option value="Universitário">Universitário</option>
-                            <option value="Empregado">Empregado</option>
-                            <option value="Empreendedor">Empreendedor</option>
+                        <select class="form-control" asp-for="TargetAudience">
+                            <option value="Student">Student</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Employee">Employee</option>
+                            <option value="Entrepreneur">Entrepreneur</option>
                         </select>
                     </div>
                 </div>

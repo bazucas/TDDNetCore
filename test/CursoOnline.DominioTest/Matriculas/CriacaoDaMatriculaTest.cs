@@ -12,59 +12,57 @@ namespace CursoOnline.DominioTest.Matriculas
 {
     public class CriacaoDaMatriculaTest
     {
-        private readonly Mock<ICursoRepositorio> _cursoRepositorio;
-        private readonly Mock<IAlunoRepositorio> _alunoRepositorio;
-        private readonly CriacaoDaMatricula _criacaoDaMatricula;
-        private readonly MatriculaDto _matriculaDto;
-        private readonly Mock<IMatriculaRepositorio> _matriculaRepositorio;
-        private readonly Aluno _aluno;
-        private readonly Curso _curso;
+        private readonly Mock<ICourseRepository> _cursoRepositorio;
+        private readonly Mock<IStudentRepository> _alunoRepositorio;
+        private readonly EnrollmentCreation _enrollmentCreation;
+        private readonly EnrollmentDto _enrollmentDto;
+        private readonly Mock<IEnrollmentRepository> _matriculaRepositorio;
+        private readonly Student _aluno;
+        private readonly Course _course;
 
         public CriacaoDaMatriculaTest()
         {
-            _cursoRepositorio = new Mock<ICursoRepositorio>();
-            _alunoRepositorio = new Mock<IAlunoRepositorio>();
-            _matriculaRepositorio = new Mock<IMatriculaRepositorio>();
+            _cursoRepositorio = new Mock<ICourseRepository>();
+            _alunoRepositorio = new Mock<IStudentRepository>();
+            _matriculaRepositorio = new Mock<IEnrollmentRepository>();
 
-            _aluno = AlunoBuilder.Novo().ComId(23).ComPublicoAlvo(TargetAudience.Universitário).Build();
-            _alunoRepositorio.Setup(r => r.ObterPorId(_aluno.Id)).Returns(_aluno);
+            _aluno = StudentBuilder.New().WithId(23).WithTargetAudience(TargetAudience.Graduate).Build();
+            _alunoRepositorio.Setup(r => r.GetById(_aluno.Id)).Returns(_aluno);
 
-            _curso = CursoBuilder.Novo().ComId(45).ComPublicoAlvo(TargetAudience.Universitário).Build();
-            _cursoRepositorio.Setup(r => r.ObterPorId(_curso.Id)).Returns(_curso);
+            _course = CursoBuilder.Novo().ComId(45).ComPublicoAlvo(TargetAudience.Graduate).Build();
+            _cursoRepositorio.Setup(r => r.GetById(_course.Id)).Returns(_course);
 
-            _matriculaDto = new MatriculaDto { AlunoId = _aluno.Id, CursoId = _curso.Id, ValorPago = _curso.Valor };
+            _enrollmentDto = new EnrollmentDto { StudentId = _aluno.Id, CourseId = _course.Id, PaidAmount = _course.Amount };
            
-            _criacaoDaMatricula = new CriacaoDaMatricula(_alunoRepositorio.Object, _cursoRepositorio.Object, _matriculaRepositorio.Object);
+            _enrollmentCreation = new EnrollmentCreation(_alunoRepositorio.Object, _cursoRepositorio.Object, _matriculaRepositorio.Object);
         }
 
         [Fact]
         public void DeveNotificarQuandoCursoNaoForEncontrado()
         {
-            Curso cursoInvalido = null;
-            _cursoRepositorio.Setup(r => r.ObterPorId(_matriculaDto.CursoId)).Returns(cursoInvalido);
+            _cursoRepositorio.Setup(r => r.GetById(_enrollmentDto.CourseId)).Returns((Course) null);
 
             Assert.Throws<DomainException>(() =>
-                    _criacaoDaMatricula.Criar(_matriculaDto))
-                .ComMensagem(Resource.CursoNaoEncontrado);
+                    _enrollmentCreation.Create(_enrollmentDto))
+                .ComMensagem(Resource.CourseNotFound);
         }
 
         [Fact]
         public void DeveNotificarQuandoAlunoNaoForEncontrado()
         {
-            Aluno alunoInvalido = null;
-            _alunoRepositorio.Setup(r => r.ObterPorId(_matriculaDto.AlunoId)).Returns(alunoInvalido);
+            _alunoRepositorio.Setup(r => r.GetById(_enrollmentDto.StudentId)).Returns((Student) null);
 
             Assert.Throws<DomainException>(() =>
-                    _criacaoDaMatricula.Criar(_matriculaDto))
-                .ComMensagem(Resource.AlunoNaoEncontrado);
+                    _enrollmentCreation.Create(_enrollmentDto))
+                .ComMensagem(Resource.StudentNotFound);
         }
 
         [Fact]
         public void DeveAdicionarMatricula()
         {
-            _criacaoDaMatricula.Criar(_matriculaDto);
+            _enrollmentCreation.Create(_enrollmentDto);
 
-            _matriculaRepositorio.Verify(r => r.Adicionar(It.Is<Matricula>(m => m.Aluno == _aluno && m.Curso == _curso)));
+            _matriculaRepositorio.Verify(r => r.Add(It.Is<Enrollment>(m => m.Student == _aluno && m.Course == _course)));
         }
     }
 }

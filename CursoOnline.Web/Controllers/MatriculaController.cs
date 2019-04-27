@@ -10,68 +10,65 @@ namespace CursoOnline.Web.Controllers
 {
     public class MatriculaController : Controller
     {
-        private readonly IMatriculaRepositorio _matriculaRepositorio;
-        private readonly IRepositorio<Aluno> _alunoRepositorio;
-        private readonly IRepositorio<Curso> _cursoRepositorio;
-        private CriacaoDaMatricula CriacaoDaMatricula;
+        private readonly IEnrollmentRepository _matriculaRepository;
+        private readonly IRepository<Student> _alunoRepository;
+        private readonly IRepository<Course> _cursoRepository;
+        private readonly EnrollmentCreation _enrollmentCreation;
 
         public MatriculaController(
-            IMatriculaRepositorio matriculaRepositorio,
-            IRepositorio<Aluno> alunoRepositorio,
-            IRepositorio<Curso> cursoRepositorio,
-            CriacaoDaMatricula criacaoDaMatricula)
+            IEnrollmentRepository matriculaRepository,
+            IRepository<Student> alunoRepository,
+            IRepository<Course> cursoRepository,
+            EnrollmentCreation enrollmentCreation)
         {
-            _matriculaRepositorio = matriculaRepositorio;
-            _alunoRepositorio = alunoRepositorio;
-            _cursoRepositorio = cursoRepositorio;
-            CriacaoDaMatricula = criacaoDaMatricula;
+            _matriculaRepository = matriculaRepository;
+            _alunoRepository = alunoRepository;
+            _cursoRepository = cursoRepository;
+            _enrollmentCreation = enrollmentCreation;
         }
 
         public IActionResult Index()
         {
-            var matriculas = _matriculaRepositorio.Consultar();
+            var matriculas = _matriculaRepository.Get();
 
-            if (matriculas.Any())
+            if (!matriculas.Any()) return View("Index", PaginatedList<EnrollmentListDto>.Create(null, Request));
+            var dtos = matriculas.Where(m => !m.Canceled).Select(c => new EnrollmentListDto
             {
-                var dtos = matriculas.Where(m => !m.Cancelada).Select(c => new MatriculaParaListagemDto
-                {
-                    Id = c.Id,
-                    NomeDoAluno = c.Aluno.Nome,
-                    NomeDoCurso = c.Curso.Nome,
-                    Valor = c.ValorPago
-                });
-                return View("Index", PaginatedList<MatriculaParaListagemDto>.Create(dtos, Request));
-            }
+                Id = c.Id,
+                StudentName = c.Student.Name,
+                CourseName = c.Course.Name,
+                Amount = c.PaidAmount
+            });
+            return View("Index", PaginatedList<EnrollmentListDto>.Create(dtos, Request));
 
-            return View("Index", PaginatedList<MatriculaParaListagemDto>.Create(null, Request));
         }
 
         public IActionResult Nova()
         {
             InicializarAlunosECursosNaViewBag();
 
-            return View("Nova", new MatriculaDto());
+            return View("Nova", new EnrollmentDto());
         }
 
         private void InicializarAlunosECursosNaViewBag()
         {
-            var alunos = _alunoRepositorio.Consultar();
+            var alunos = _alunoRepository.Get();
             if (alunos != null && alunos.Any())
-                alunos = alunos.OrderBy(a => a.Nome).ToList();
+                alunos = alunos.OrderBy(a => a.Name).ToList();
 
             ViewBag.Alunos = alunos;
 
-            var cursos = _cursoRepositorio.Consultar();
+            var cursos = _cursoRepository.Get();
             if (cursos != null && cursos.Any())
-                cursos = cursos.OrderBy(c => c.Nome).ToList();
+                cursos = cursos.OrderBy(c => c.Name).ToList();
 
             ViewBag.Cursos = cursos;
         }
 
         [HttpPost]
-        public IActionResult Salvar(MatriculaDto model)
+        public IActionResult Salvar(EnrollmentDto model)
         {
-            CriacaoDaMatricula.Criar(model);
+            _enrollmentCreation.Create(model);
             return Ok();
         }
     }

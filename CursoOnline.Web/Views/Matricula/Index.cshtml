@@ -1,6 +1,5 @@
 ﻿@using CursoOnline.Dominio.Matriculas
-@using CursoOnline.Web.Util
-@model CursoOnline.Web.Util.PaginatedList<MatriculaParaListagemDto>
+@model CursoOnline.Web.Util.PaginatedList<EnrollmentListDto>
 @{
     ViewData["Title"] = "Cursos";
 }
@@ -17,10 +16,10 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th>Name</th>
                         <th>Carga Horária</th>
                         <th>Publico Alvo</th>
-                        <th>Valor</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,13 +27,13 @@
                     {
                         <tr>
                             <td>
-                                @item.NomeDoAluno
+                                @item.StudentName
                             </td>
                             <td>
-                                @item.NomeDoCurso
+                                @item.CourseName
                             </td>
                             <td>
-                                @item.Valor
+                                @item.Amount
                             </td>
                             <td>
                                 <a href="/Curso/Editar/@item.Id" class="btn">Editar</a>

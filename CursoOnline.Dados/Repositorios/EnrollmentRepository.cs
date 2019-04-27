@@ -9,17 +9,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CursoOnline.Dados.Repositorios
 {
-    public class MatriculaRepositorio : RepositorioBase<Matricula>, IMatriculaRepositorio
+    public class EnrollmentRepository : RepositoryBase<Enrollment>, IEnrollmentRepository
     {
-        public MatriculaRepositorio(ApplicationDbContext context) : base(context)
+        public EnrollmentRepository(ApplicationDbContext context) : base(context)
         {
         }
 
-        public override List<Matricula> Consultar()
+        public override List<Enrollment> Get()
         {
-            var query = Context.Set<Matricula>()
-                .Include(i => i.Aluno)
-                .Include(i => i.Curso)
+            var query = Context.Set<Enrollment>()
+                .Include(i => i.Student)
+                .Include(i => i.Course)
                 .ToList();
 
             return query;
